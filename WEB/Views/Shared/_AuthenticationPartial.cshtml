@@ -1,0 +1,80 @@
+﻿@if (User.IsInRole("admin"))
+{
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+            <i class="fa-solid fa-user-tie"></i>
+            <span>Admin Paneli</span>
+        </a>
+
+    </li>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link " asp-area="Admin" asp-controller="Roles" asp-action="Index">
+            <i class="fa-brands fa-critical-role"></i>
+            <span>Roller</span>
+        </a>
+
+    </li>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link " asp-area="Admin" asp-controller="CustomerManagers" asp-action="Index">
+            <i class="fa-solid fa-people-roof"></i>
+            <span>Müşteri Yöneticileri</span>
+        </a>
+
+    </li>
+}
+else if (User.IsInRole("customerManager"))
+{
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link">
+            <i class="fa-solid fa-people-line"></i>
+            <span>Öğretmenler</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link">
+            <i class="fa-solid fa-people-line"></i>
+            <span>Öğrenciler</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link">
+            <i class="fa-solid fa-school"></i>
+            <span>Sınıflar</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+}
+
+else if (User.IsInRole("student"))
+{
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Education" asp-controller="Students" asp-action="StudentDetail" asp-route-model="null">
+            <i class="fa-solid fa-book-open"></i>
+            <span>Notlarım</span>
+        </a>
+    </li>
+}
+
+else if (User.IsInRole("teacher"))
+{
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a asp-area="Education" asp-controller="Teachers" asp-action="GetClassrooms" class="nav-link">
+            <i class="fa-solid fa-school"></i>
+            <span>Sınıflarım</span>
+        </a>
+    </li>
+}

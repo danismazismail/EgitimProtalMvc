@@ -1,0 +1,138 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@model List<GetStudentVM>
+
+<div class="row mt-2">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Öğrenciler</h3>
+            </div>
+            <div class="card-body">
+                <div class="table table-responsive">
+                    <table class="table table-hover myTable">
+                        <thead>
+                            <tr>
+                                <th>Öğrenci</th>
+                                <th>E-Mail</th>
+                                <th>Doğum Tarihi</th>
+                                <th>Sınıf</th>
+                                <th>Öğretmen</th>
+                                <th>Ortalama</th>
+                                <th>Durum</th>
+                                <th>Eklenme Tarihi</th>
+                                <th>Güncellenme Tarihi</th>
+                                <th>Durum</th>
+                                <th>Detay</th>
+                                <th>Güncelle</th>
+                                <th>Sil</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var student in Model)
+                            {
+                                <tr>
+                                    <td>@student.FirstName @student.LastName</td>
+                                    @if (student.Email.Length > 10)
+                                    {
+                                        <td>@student.Email.Substring(0,10) ...</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@student.Email</td>
+                                    }
+                                    <td>@student.BirthDate.ToShortDateString()</td>
+                                    <td>@student.ClassroomName</td>
+                                    <td>@student.TeacherName</td>
+                                    @if (student.Average is not null)
+                                    {
+                                        <td>
+                                            @student.Average
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td> - </td>
+                                    }
+                                    @if (student.StudentStatus is not null)
+                                    {
+                                       @if (student.StudentStatus == ApplicationCore.Consts.StudentStatus.Succeed)
+                                        {
+                                            <td>Geçti</td>
+                                        }
+                                        else if (student.StudentStatus == ApplicationCore.Consts.StudentStatus.Failed)
+                                        {
+                                            <td>Kaldı</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Devam Ediyor...</td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <td> - </td>
+                                    }
+
+                                    <td>@student.CreatedDate</td>
+                                    @if (student.UpdatedDate != null)
+                                    {
+                                        <td>@student.UpdatedDate</td>
+                                    }
+                                    else
+                                    {
+                                        <td> - </td>
+                                    }
+                                    @if (student.Status == ApplicationCore.Consts.Status.Active)
+                                    {
+                                        <td> Aktif </td>
+                                    }
+                                    else
+                                    {
+                                        <td> Güncellenmiş </td>
+                                    }
+                                    <td>
+                                        <a asp-action="DetailStudent" asp-route-id="@student.Id" class="btn btn-outline-dark">Detay</a>
+                                    </td>
+                                    <td>
+                                        <a asp-action="UpdateStudent" asp-route-id="@student.Id" class="btn btn-outline-success">Güncelle</a>
+                                    </td>
+                                    <td>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal-@student.Id">
+                                            Sil
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal-@student.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Silme Uyarısı</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Silme istediğinize emin misiniz?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">İptal</button>
+                                                        <a asp-action="DeleteStudent" asp-route-id="@student.Id" class="btn btn-outline-danger">Evet</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a asp-action="CreateStudent" class="btn btn-outline-dark d-block">Yeni Öğrenci Ekle</a>
+
+            </div>
+        </div>
+    </div>
+</div>
